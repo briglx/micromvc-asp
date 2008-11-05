@@ -59,7 +59,7 @@ namespace MicroMvc
             // Default.aspx/?<userId>(\w+)
 
             string pattern = url.Replace("/[", "/(?<");
-            pattern = pattern.Replace("]", ">(\\w+))");
+            pattern = pattern.Replace("]", ">([\\w\\s]+))");
 
             return pattern;
         }
