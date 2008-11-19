@@ -6,7 +6,7 @@ using System.Web.UI;
 
 namespace MicroMvc
 {
-    public class ViewPage<T> : Page
+    public class ViewPage<T> : Page, IBaseView<T>
     {
         public T ViewData { get; set; }
     }

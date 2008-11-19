@@ -58,8 +58,8 @@ namespace MicroMvc
             // Default.aspx/[userId]
             // Default.aspx/?<userId>(\w+)
 
-            string pattern = url.Replace("/[", "/(?<");
-            pattern = pattern.Replace("]", ">.+)");
+            string pattern = url.Replace("[", "(?<");
+            pattern = pattern.Replace("]", ">([\\w\\s]+))");
 
             return pattern;
         }
@@ -74,7 +74,6 @@ namespace MicroMvc
             Regex r = new Regex("\\[\\w*\\]", RegexOptions.IgnoreCase);
             MatchCollection matches = r.Matches(url);
 
-            string trimmed;
             foreach(Match m in  matches)
             {
 

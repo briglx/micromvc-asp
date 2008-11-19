@@ -18,16 +18,22 @@ namespace MicroMvc.WebTest.Controllers
         {
             // Show the Default View
             Student s = new Student();
-            s.FirstName = "John";
+            s.FirstName = this.RouteData.Values["name"];
             s.LastName = "Howza";
             s.Phone = "555-4459";
 
-            ViewPage<Student> v = (ViewPage<Student>)LoadView("~/Views/Default.aspx");
 
-            v.ViewData = s;
-
-            v.ProcessRequest(this.Context);
-            
+            IBaseView<Student> baseView;
+            if (false)
+            {
+                baseView = (ViewPage<Student>)LoadView("~/Views/Default.aspx");
+            }
+            else
+            {
+                baseView = new XmlView<Student>();
+            }
+            baseView.ViewData = s;
+            baseView.ProcessRequest(this.Context);
 
         }
 
