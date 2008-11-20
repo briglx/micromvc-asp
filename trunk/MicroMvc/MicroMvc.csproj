@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="BaseView.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="JSONSerializer.cs" />
+    <Compile Include="JsonView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteSection.cs" />
     <Compile Include="Routes\Route.cs" />
