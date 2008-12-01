@@ -39,14 +39,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseView.cs" />
+    <Compile Include="CommonController.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="JSONSerializer.cs" />
     <Compile Include="JsonView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedirectView.cs" />
     <Compile Include="RouteSection.cs" />
     <Compile Include="Routes\Route.cs" />
     <Compile Include="Routes\RouteCollection.cs" />
     <Compile Include="Routes\RouteData.cs" />
+    <Compile Include="TextView.cs" />
     <Compile Include="UrlHelper.cs" />
     <Compile Include="UrlRoutingModule.cs" />
     <Compile Include="ViewData.cs" />
