@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.IO;
 using System.Web;
-
 
 namespace MicroMvc
 {
-    public class JsonView<T> : IBaseView<T>
+    public class TextView<T> : IBaseView<T>
     {
         public T ViewData { get; set; }
         public bool IsReusable
@@ -17,11 +15,9 @@ namespace MicroMvc
 
         public void ProcessRequest(HttpContext context)
         {
+            string result = this.ViewData.ToString();
 
-            // Perform JSON to datawrapper collection returning string value
-            string result = JSONSerializer.ToJSON(this.ViewData);
-
-            context.Response.ContentType = "text/json";
+            context.Response.ContentType = "text/text";
             context.Response.Write(result);
             context.Response.End();
         }

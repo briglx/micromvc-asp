@@ -21,30 +21,34 @@ namespace MicroMvc
 
         public RouteData GetRouteData(Uri uri)
         {
+            Object syncRoot = new object();
 
-            RouteData routeData = new RouteData();
+            //lock (syncRoot)
+            //{
+                RouteData routeData = new RouteData();
 
-            // Cycle through each route to find one that matches the passed in uri
-            foreach (Route r in this.Routes)
-            {
-                if (r.Match(uri))
+                // Cycle through each route to find one that matches the passed in uri
+                foreach (Route r in this.Routes)
                 {
-                    routeData.Route = r;
-
-                    // Get Group 
-                    Regex reg = new Regex(r.Pattern, RegexOptions.IgnoreCase);
-                    GroupCollection groups = reg.Match(uri.ToString()).Groups;
-
-                    foreach(string groupName in r.Parameters)
+                    if (r.Match(uri))
                     {
-                        routeData.Values.Add(groupName, groups[groupName].Value);
+                        routeData.Route = r;
+
+                        // Get Group 
+                        Regex reg = new Regex(r.Pattern, RegexOptions.IgnoreCase);
+                        GroupCollection groups = reg.Match(uri.ToString()).Groups;
+
+                        foreach (string groupName in r.Parameters)
+                        {
+                            routeData.Values.Add(groupName, groups[groupName].Value);
+                        }
+
+                        return routeData;
                     }
-
-                    return routeData;
                 }
-            }
 
-            return null;
+                return null;
+            //}
            
         }
 
