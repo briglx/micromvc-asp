@@ -12,7 +12,7 @@ namespace MicroMvc.Test
     public class RouteCollectionTests
     {
 
-        RouteCollection Routes = new RouteCollection();
+        RouteCollection Routes = RouteCollection.Instance;
         delegate RouteData AsyncGetRouteData(Uri url);
         static string realString = "";
         static int count = 1;

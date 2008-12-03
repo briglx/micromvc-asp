@@ -15,7 +15,7 @@ namespace MicroMvc.Test
         [SetUp]
         public void SetUp()
         {
-            Routes = new RouteCollection();
+            Routes = RouteCollection.Instance;
 
             Routes.Add(new Route
             {
