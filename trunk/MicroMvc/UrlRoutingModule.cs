@@ -9,9 +9,9 @@ using System.Web.Compilation;
 
 namespace MicroMvc
 {
-    public class UrlRoutingModule : IHttpModule
+    public sealed class UrlRoutingModule : IHttpModule
     {
-        private static RouteCollection _routes = new RouteCollection();
+        private static RouteCollection _routes = RouteCollection.Instance;
       
         void IHttpModule.Init(HttpApplication context)
         {
@@ -21,6 +21,7 @@ namespace MicroMvc
 
         private void Application_PostMapRequestHandler(object sender, EventArgs evargs)
         {
+
             RouteData routeData = _routes.GetRouteData(HttpContext.Current.Request.Url);
 
             // Found match
@@ -32,7 +33,6 @@ namespace MicroMvc
                 c.RouteData = routeData;
 
                 HttpContext.Current.Handler = c;
-
             }
         }
 
@@ -41,7 +41,7 @@ namespace MicroMvc
         private static void LoadConfiguration()
         {
             MvcSection mvcSection;
-            mvcSection = (MvcSection)WebConfigurationManager.GetSection("microMvc");
+            mvcSection = (MvcSection)WebConfigurationManager.GetSection("apolloMvc");
 
             foreach (RouteSettings r in mvcSection.Routes)
             {
