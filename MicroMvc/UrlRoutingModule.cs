@@ -41,7 +41,7 @@ namespace MicroMvc
         private static void LoadConfiguration()
         {
             MvcSection mvcSection;
-            mvcSection = (MvcSection)WebConfigurationManager.GetSection("apolloMvc");
+            mvcSection = (MvcSection)WebConfigurationManager.GetSection("microMvc");
 
             foreach (RouteSettings r in mvcSection.Routes)
             {
