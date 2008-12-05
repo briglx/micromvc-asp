@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Web;
 
 namespace MicroMvc
 {
@@ -25,7 +26,7 @@ namespace MicroMvc
 
             // Bind
             view.ViewData = viewData;
-            view.ProcessRequest(this.Context);
+            view.ProcessRequest(HttpContext.Current);
         }
 
         private void WriteAction(string message)
@@ -35,7 +36,7 @@ namespace MicroMvc
 
             // Bind data
             view.ViewData = message;
-            view.ProcessRequest(this.Context);
+            view.ProcessRequest(HttpContext.Current);
         }
 
         public static void Redirect(string url)
