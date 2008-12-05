@@ -9,7 +9,6 @@ namespace MicroMvc
 {
     public class XmlView<T> : IBaseView<T>
     {
-
         public T ViewData { get; set; }
         public bool IsReusable
         {
@@ -28,5 +27,6 @@ namespace MicroMvc
             context.Response.Write(result);
             context.Response.End();
         }
+
     }
 }

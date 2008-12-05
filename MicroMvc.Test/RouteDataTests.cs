@@ -16,20 +16,15 @@ namespace MicroMvc.Test
         public void SetUp()
         {
             Routes = RouteCollection.Instance;
-
-            Routes.Add(new Route
-            {
-                Url = "Default.aspx/[userId]"
-            });
-            Routes.Add(new Route
-            {
-                Url = @"/gadgets/workshops/workshop.ashx/[Action]\?monthYear=[strDate]&zipCode"
-            });
         }
 
         [Test]
         public void UserIDJPMorganTest()
         {
+            Routes.Add(new Route
+            {
+                Url = "Default.aspx/[userId]"
+            });
             Uri uri = new Uri("http://example.com/default.aspx/jpmorgan");
             RouteData routeData = this.Routes.GetRouteData(uri);
             Assert.AreEqual("jpmorgan", routeData.Values["userId"]);
@@ -38,6 +33,10 @@ namespace MicroMvc.Test
         [Test]
         public void UserIDBrlamoreTest()
         {
+            Routes.Add(new Route
+            {
+                Url = "Default.aspx/[userId]"
+            });
             Uri uri = new Uri("http://example.com/default.aspx/brlamore");
             RouteData routeData = this.Routes.GetRouteData(uri);
             Assert.AreEqual("brlamore", routeData.Values["userId"]);
@@ -47,6 +46,10 @@ namespace MicroMvc.Test
         [Test]
         public void ParsingBugTest()
         {
+            Routes.Add(new Route
+            {
+                Url = @"/gadgets/workshops/workshop.ashx/[Action]\?monthYear=[strDate]&zipCode"
+            });
             Uri uri = new Uri("http://apophxl3t5483/Gadgets/workshops/workshop.ashx/workshopgroundstudent?monthYear=082008&zipCode=85040&milesRange=50");
             RouteData routeData = this.Routes.GetRouteData(uri);
             Assert.AreEqual("082008", routeData.Values["strDate"]);
@@ -62,7 +65,35 @@ namespace MicroMvc.Test
 
             Uri uri = new Uri("http://apophxl3t5483/Default.aspx/brig/resultFormat=xml");
             RouteData routeData = this.Routes.GetRouteData(uri);
-            Assert.IsNull(routeData.Values["ResultFormat"]);
+            Assert.AreEqual("xml",routeData.Values["ResultFormat"]);
+        }
+
+        [Test]
+        public void NoTrailingSlashTest()
+        {
+            Routes.Add(new Route
+            {
+                Url = @"/profile/[userId]/[action]/?$"
+            });
+
+            Uri uri = new Uri("http://ecampus.phoenix.edu/community/profile/brlamore/edit");
+            RouteData routeData = this.Routes.GetRouteData(uri);
+            Assert.AreEqual("edit", routeData.Values["action"]);
+
+        }
+
+        [Test]
+        public void TrailingSlashTest()
+        {
+            Routes.Add(new Route
+            {
+                Url = @"/profile/[userId]/[action]/?$"
+            });
+
+            Uri uri = new Uri("http://ecampus.phoenix.edu/community/profile/brlamore/edit/");
+            RouteData routeData = this.Routes.GetRouteData(uri);
+            Assert.AreEqual("edit", routeData.Values["action"]);
+          
         }
 
     }

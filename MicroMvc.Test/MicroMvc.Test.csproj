@@ -48,12 +48,26 @@
     <Compile Include="RouteCollectionTests.cs" />
     <Compile Include="RouteDataTests.cs" />
     <Compile Include="RouteTest.cs" />
+    <Compile Include="Views\TestView.aspx.cs">
+      <DependentUpon>TestView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TestView.aspx.designer.cs">
+      <DependentUpon>TestView.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestViewData.cs" />
+    <Compile Include="ViewTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MicroMvc\MicroMvc.csproj">
       <Project>{2F196306-A638-42E5-A2DC-9AF78BF5E612}</Project>
       <Name>MicroMvc</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\TestView.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
