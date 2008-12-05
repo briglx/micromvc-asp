@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using NUnit.Framework;
 
 
@@ -21,8 +22,8 @@ namespace MicroMvc.Test
         [SetUp]
         public void SetUp()
         {
-            Routes.Add(new Route{Url = "Default.aspx/[category]/[color]"});
-            Routes.Add(new Route{Url = "Default.aspx/[userId]"});            
+            Routes.Add(new Route { Url = "Default.aspx/[category]/[color]" });
+            Routes.Add(new Route { Url = "Default.aspx/[userId]" });
         }
 
         [Test]
@@ -46,78 +47,35 @@ namespace MicroMvc.Test
         [Test]
         public void MulitThreadTest()
         {
-            int testCount = 100000;
+            Thread start = new Thread(new ThreadStart(GetRouteData));
 
-            Uri uri = new Uri("http://example.com/default.aspx/fruit/yellow");
-
-            string s = "";
-
-            for (int x = 0; x < testCount; x++)
+            start.Start();
+            for (int x = 0; x < 1000; x++)
             {
-                // Call async call to GetRouteData
-                AsyncGetRouteData asyncGetData = new AsyncGetRouteData(GetRouteData);
-                AsyncGetRouteData asyncGetData2 = new AsyncGetRouteData(GetRouteData2);
-                AsyncGetRouteData asyncGetData3 = new AsyncGetRouteData(GetRouteData3);
 
-                asyncGetData.BeginInvoke(uri, null, null);
-                s += ".";
-                asyncGetData2.BeginInvoke(uri, null, null);
-                s += "x";
-                asyncGetData3.BeginInvoke(uri, null, null);
-                s += "-";
-
-                
+                if (false)
+                {
+                    GetRouteData();
+                }
+                else
+                {
+                    Thread a = new Thread(new ThreadStart(GetRouteData));
+                    Thread b = new Thread(new ThreadStart(GetRouteData));
+                    a.Start();
+                    b.Start();
+                    
+                }
             }
-
-            System.Diagnostics.Trace.Write("Done " + count);
-
-            while (count < (3 * testCount)) ;
-
-            System.Diagnostics.Trace.Write("Done again " + count);
-            Assert.AreNotEqual(s, realString);
+            Thread.Sleep(1000);
+            start.Join();
+            Assert.IsTrue(true);
 
         }
 
-        private RouteData GetRouteData(Uri url)
+        private void GetRouteData()
         {
-            // Radomize a wait
-            Random r = new Random();
-
-            realString += ".";
-            count++;
-
-            int x = r.Next(1, 2);
-            System.Threading.Thread.Sleep(x);
-            return Routes.GetRouteData(url);
-
+            Routes.GetRouteData(new Uri("http://example.com/default.aspx/fruit/yellow"));
         }
-        private RouteData GetRouteData2(Uri url)
-        {
-            // Radomize a wait
-            Random r = new Random();
-
-            realString += "x";
-            count++;
-
-            int x = r.Next(2, 3);
-            System.Threading.Thread.Sleep(x);
-            return Routes.GetRouteData(url);
-
-        }
-        private RouteData GetRouteData3(Uri url)
-        {
-            // Radomize a wait
-            Random r = new Random();
-
-            realString += "-";
-            count++;
-
-            int x = r.Next(3, 4);
-            System.Threading.Thread.Sleep(x);
-            return Routes.GetRouteData(url);
-
-        }
-
     }
 }
 
