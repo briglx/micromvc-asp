@@ -18,6 +18,12 @@ namespace MicroMvc.Test
             Routes = RouteCollection.Instance;
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            Routes = null;
+        }
+
         [Test]
         public void UserIDJPMorganTest()
         {
@@ -94,6 +100,37 @@ namespace MicroMvc.Test
             RouteData routeData = this.Routes.GetRouteData(uri);
             Assert.AreEqual("edit", routeData.Values["action"]);
           
+        }
+
+        [Test]
+        public void ParamterTest()
+        {
+            Routes.Add(new Route
+            {
+                Url = @"roster/[orgaId]/[course]/[courseId]/[groupId]/([view]\?[action]=[param])?"
+            });
+
+
+            Uri uri = new Uri("http://ecampus.phoenix.edu/community/roster/4/gmt/550/gmt550ab32/default?sort=fn");
+
+            RouteData routeData = this.Routes.GetRouteData(uri);
+            Assert.AreEqual("default", routeData.Values["view"]);
+            Assert.AreEqual("sort", routeData.Values["action"]);
+            Assert.AreEqual("fn", routeData.Values["param"]);
+        }
+        [Test]
+        public void ParamterWithOutTest()
+        {
+            Routes.Add(new Route
+            {
+                Url = @"roster/[orgaId]/[course]/[courseId]/[groupId]/([view]\?[action]=[param])?"
+            });
+
+
+            Uri uri = new Uri("http://ecampus.phoenix.edu/community/roster/4/gmt/550/gmt550ab32/");
+
+            RouteData routeData = this.Routes.GetRouteData(uri);
+            Assert.AreEqual("gmt550ab32", routeData.Values["groupId"]);
         }
 
     }
