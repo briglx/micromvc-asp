@@ -133,5 +133,23 @@ namespace MicroMvc.Test
             Assert.AreEqual("gmt550ab32", routeData.Values["groupId"]);
         }
 
+        [Test]
+        public void SortTest()
+        {
+            Routes.Add(new Route
+            {
+                Url = @"roster/[orgaId]/[course]/[courseId]/[groupId]/([view])?"
+            });
+
+
+            Uri uri = new Uri("http://ecampus.phoenix.edu/community/roster/4/gmt/550/gmt550ab32/default?sort=fn");
+
+            RouteData routeData = this.Routes.GetRouteData(uri);
+            Assert.AreEqual("gmt550ab32", routeData.Values["groupId"]);
+            Assert.AreEqual("default", routeData.Values["view"]);
+        }
+
+      
+
     }
 }
