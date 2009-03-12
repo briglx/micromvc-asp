@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project name="MicroMvc" default="package" xmlns="http://nant.sf.net/schemas/nant.xsd">
+
+  <!-- Configure these properties -->
+  <property name="ver" value="1.0" />
+  <property name="solution.dir" value="../../../" />
+    
+  <!-- Use these properties in your targets-->
+  
+  <property name="build.dir" value="${solution.dir}/build/${ver}" />  
+  <property name="docs.dir" value="${solution.dir}/docs" />
+  <property name="ver.dir" value="${docs.dir}/ver/${ver}" />
+  <property name="proj.dir" value="${solution.dir}/MicroMvc" />
+  <property name="tools.dir" value="${solution.dir}/tools" />
+   
+   
+    <!-- Build Project -->
+  <target name="compile" description="Compiles using the Release Configuration">
+    <msbuild project="${solution.dir}\MicroMvc.sln">
+      <property name="Configuration" value="Release"/>
+    </msbuild>     
+  </target>  
+     
+  <!-- Internal targets -->
+  <target name="getFiles" depends="compile">
+  
+	<!-- Clear out staging dir -->
+	<delete dir="${build.dir}" />
+	  
+	<!-- Copy Files to be zipped -->    
+    <copy todir="${build.dir}\">
+      <fileset basedir="${proj.dir}\bin\release\">
+		<!--Dll's-->
+		<include name="MicroMvc.dll"/>		
+      </fileset>
+    </copy>
+                
+  </target>
+  
+  <target name="package" depends="getFiles" >
+    
+    <!-- Code Files -->
+    <zip zipfile="${ver.dir}\MicroMvp_v${ver}.zip">
+      <fileset basedir="${build.dir}\" >
+        <include name="**\*" />
+      </fileset> 	  
+    </zip>
+	    
+  </target>
+  
+</project>
+	
+	
+	
+	
