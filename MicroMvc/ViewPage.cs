@@ -11,6 +11,7 @@ namespace MicroMvc
     {
         private T _viewData;
         public T ViewData { get; set; }
+        public new string ContentType { get; set; }
 
         public static ViewPage<T> LoadView(string viewName) 
         {
@@ -22,6 +23,7 @@ namespace MicroMvc
 
             ViewPage<T> viewPage = (ViewPage<T>)Activator.CreateInstance(type);
 
+            viewPage.ContentType = "text/html";
             return viewPage;
         }
 
@@ -34,6 +36,11 @@ namespace MicroMvc
         public void SetViewData(object value)
         {
             _viewData = (T)value;
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            Response.ContentType = this.ContentType;
         }
 
     }
