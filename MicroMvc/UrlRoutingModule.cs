@@ -45,7 +45,7 @@ namespace MicroMvc
 
             foreach (RouteSettings r in mvcSection.Routes)
             {
-                _routes.Add(new Route(r.Url,r.Handler));
+                _routes.Add(new Route(r.Url,r.Handler,r.Construct));
             }
 
             

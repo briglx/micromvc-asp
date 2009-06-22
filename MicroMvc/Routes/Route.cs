@@ -10,28 +10,34 @@ namespace MicroMvc
         private string _url;
         private string _pattern;
         private string _handler;
+        private bool _construct;
         private List<string> _parameters;
 
         public Route(){}
-        public Route(string url, string handler)
+        public Route(string url, string handler, bool construct)
         {
+            this.Construct = construct;
             this.Url = url;
             this.Handler = handler;
         }
-
         public string Url
         {
             get { return _url; }
             set
             {
                 _url = value;
-                _pattern = ConstructPattern(_url);
+                _pattern = ConstructPattern(_url, _construct);
                 _parameters = GetParameters(_url);
             }
         }
         public string Pattern
         {
             get { return _pattern; }
+        }
+        public bool Construct
+        {
+            get{return _construct;}
+            set{_construct = value;}
         }
         public string Handler
         {
@@ -52,14 +58,27 @@ namespace MicroMvc
             return r.IsMatch(input);
         }
 
-        private string ConstructPattern(string url)
+        private string ConstructPattern(string url, bool construct)
         {
             // Example:
             // Default.aspx/[userId]
             // Default.aspx/?<userId>(\w+)
 
-            string pattern = url.Replace("[", "(?<");
-            pattern = pattern.Replace("]", ">[^/^?]+)");
+            string pattern = "";
+
+            if (construct)
+            {
+                pattern = url.Replace("[", "(?<");
+                pattern = pattern.Replace("]", ">[^/^?]+)");
+            }
+            else
+            {
+                pattern = url.Replace("[", "<");
+                pattern = pattern.Replace("]", ">");
+
+                pattern = pattern.Replace("1$", "[");
+                pattern = pattern.Replace("$1", "]");
+            }
 
             return pattern;
         }
