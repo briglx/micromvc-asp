@@ -5,8 +5,14 @@ using System.Web;
 
 namespace MicroMvc
 {
-    public interface IBaseView<T> : IHttpHandler
+    public interface IBaseView<T> : IBaseView
     {
-        T ViewData { get; set; }
+       new T ViewData { get; set; }
     }
+
+    public interface IBaseView : IHttpHandler
+    {
+        Object ViewData { get; set; }
+    }
+
 }

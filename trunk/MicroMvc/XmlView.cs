@@ -27,6 +27,17 @@ namespace MicroMvc
             context.Response.Write(result);
             context.Response.End();
         }
+        object IBaseView.ViewData
+        {
+            get
+            {
+                return this.ViewData;
+            }
+            set
+            {
+                this.ViewData = (T)value;
+            }
+        }
 
     }
 }

@@ -7,41 +7,23 @@ using System.Web.Compilation;
 
 namespace MicroMvc
 {
-    public class ViewPage<T> : Page, IBaseView<T>
+    public class ViewPage<T> : ViewPage, IBaseView<T>
     {
-        private T _viewData;
-        public T ViewData { get; set; }
-        public new string ContentType { get; set; }
+        public new T ViewData { get { return (T)base.ViewData; } set { base.ViewData = (T)value; } }
+    }
 
-        public static ViewPage<T> LoadView(string viewName) 
-        {
-            Type type = BuildManager.GetCompiledType(viewName);
+    public class ViewPage : Page, IBaseView
+    {
 
-            // if type is null, could not determine page type
-            if (type == null)
-                throw new InvalidOperationException("View " + viewName + " not found");
-
-            ViewPage<T> viewPage = (ViewPage<T>)Activator.CreateInstance(type);
-
-            viewPage.ContentType = "text/html";
-            return viewPage;
-        }
-
-        public T GetViewData()
-        {
-            
-                return _viewData;
-        }
-
-        public void SetViewData(object value)
-        {
-            _viewData = (T)value;
-        }
+        public string ContentType { get; set; }
 
         protected override void OnPreRender(EventArgs e)
         {
             Response.ContentType = this.ContentType;
         }
+
+
+        public object ViewData { get; set; }
 
     }
 }
