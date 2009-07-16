@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Web.Compilation;
+using System.Web.UI;
 
 namespace MicroMvc
 {
@@ -60,11 +61,17 @@ namespace MicroMvc
             if (type == null)
                 throw new InvalidOperationException("View " + viewName + " not found");
 
-            IHttpHandler pageView = (IHttpHandler)Activator.CreateInstance(type);
-
-            return pageView;
-
-
+            IHttpHandler view;
+            if (typeof(UserControl).IsAssignableFrom(type))
+            {
+                System.Web.UI.UserControl temp = new System.Web.UI.UserControl();
+                view = (IHttpHandler)temp.LoadControl(viewName);
+            }
+            else
+            {
+                view = (IHttpHandler)Activator.CreateInstance(type);
+            }
+            return view;
         }
     }
 }

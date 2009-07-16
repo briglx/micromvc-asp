@@ -17,6 +17,17 @@ namespace MicroMvc
         {
             context.Response.Redirect(this.ViewData.Url,this.ViewData.EndResponse);
         }
+        object IBaseView.ViewData
+        {
+            get
+            {
+                return this.ViewData;
+            }
+            set
+            {
+                this.ViewData = (RedirectViewData)value;
+            }
+        }
 
     }
 
