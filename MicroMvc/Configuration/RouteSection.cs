@@ -116,6 +116,13 @@ namespace MicroMvc
                 this["handler"] = value;
             }
         }
+
+        [ConfigurationProperty("construct", IsRequired = false, DefaultValue = true)]
+        public bool Construct
+        {
+            get { return (bool)this["construct"]; }
+            set { this["construct"] = value; }
+        }
     }
 
 }
