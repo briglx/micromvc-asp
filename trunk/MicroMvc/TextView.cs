@@ -22,7 +22,12 @@ namespace MicroMvc
 
         public void ProcessRequest(HttpContext context)
         {
-            string result = this.ViewData.ToString();
+            string result = string.Empty;
+
+            if (this.ViewData != null)
+            {
+                result = this.ViewData.ToString();
+            }
 
             context.Response.ContentType = this.ContentType;
             context.Response.Write(result);
