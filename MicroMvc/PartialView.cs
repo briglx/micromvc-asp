@@ -15,11 +15,12 @@ namespace MicroMvc
     public class PartialView : UserControl, IBaseView
     {
         public object ViewData { get; set; }
-
         public string ContentType { get; set; }
+        public int StatusCode { get; set; }
 
         public PartialView()
         {
+            this.StatusCode = 200;
             this.ContentType = "text/html";
         }
 
@@ -49,6 +50,7 @@ namespace MicroMvc
             string result = this.RenderView();
 
             context.Response.ContentType = this.ContentType;
+            context.Response.StatusCode = this.StatusCode;
             context.Response.Write(result);
             context.Response.End();
         }

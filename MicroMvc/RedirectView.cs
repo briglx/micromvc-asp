@@ -5,30 +5,12 @@ using System.Web;
 
 namespace MicroMvc
 {
-    public class RedirectView : IBaseView<RedirectViewData>
+    public class RedirectView : BaseView<RedirectViewData>
     {
-        public RedirectViewData ViewData { get; set; }
-        public bool IsReusable
-        {
-            get { return false; }
-        }
-
-        public void ProcessRequest(HttpContext context)
+        public override void ProcessRequest(HttpContext context)
         {
             context.Response.Redirect(this.ViewData.Url,this.ViewData.EndResponse);
         }
-        object IBaseView.ViewData
-        {
-            get
-            {
-                return this.ViewData;
-            }
-            set
-            {
-                this.ViewData = (RedirectViewData)value;
-            }
-        }
-
     }
 
     public class RedirectViewData
@@ -42,7 +24,6 @@ namespace MicroMvc
 
         public string Url { get; set; }
         public bool EndResponse { get; set; }
-        
         
     }
 }

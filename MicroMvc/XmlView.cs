@@ -7,15 +7,13 @@ using System.Xml.Serialization;
 
 namespace MicroMvc
 {
-    public class XmlView<T> : IBaseView<T>
+    public class XmlView<T> : BaseView<T>
     {
-        public T ViewData { get; set; }
-        public bool IsReusable
+        public XmlView()
         {
-            get { return false; }
+            this.ContentType = "text/xml";
         }
-
-        public void ProcessRequest(HttpContext context)
+        public override void ProcessRequest(HttpContext context)
         {
             XmlSerializer x = new XmlSerializer(this.ViewData.GetType());
             StringWriter stream = new StringWriter();
@@ -24,20 +22,9 @@ namespace MicroMvc
             String result = stream.ToString();
 
             context.Response.ContentType = "text/xml";
+            context.Response.StatusCode = this.StatusCode;
             context.Response.Write(result);
             context.Response.End();
         }
-        object IBaseView.ViewData
-        {
-            get
-            {
-                return this.ViewData;
-            }
-            set
-            {
-                this.ViewData = (T)value;
-            }
-        }
-
     }
 }

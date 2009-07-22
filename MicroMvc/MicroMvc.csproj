@@ -46,6 +46,9 @@
     <Compile Include="HtmlHelper.cs" />
     <Compile Include="JSONSerializer.cs" />
     <Compile Include="JsonView.cs" />
+    <Compile Include="PageView.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="PartialView.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

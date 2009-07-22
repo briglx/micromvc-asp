@@ -7,35 +7,22 @@ using System.Web;
 
 namespace MicroMvc
 {
-    public class JsonView<T> : IBaseView<T>
+    public class JsonView<T> : BaseView<T>
     {
-        public T ViewData { get; set; }
-        public bool IsReusable
+        public JsonView()
         {
-            get { return false; }
+            this.ContentType = "text/json";
         }
-
-        public void ProcessRequest(HttpContext context)
+        public override void ProcessRequest(HttpContext context)
         {
 
             // Perform JSON to datawrapper collection returning string value
             string result = JSONSerializer.ToJSON(this.ViewData);
 
-            context.Response.ContentType = "text/json";
+            context.Response.ContentType = this.ContentType;
+            context.Response.StatusCode = this.StatusCode;
             context.Response.Write(result);
             context.Response.End();
         }
-        object IBaseView.ViewData
-        {
-            get
-            {
-                return this.ViewData;
-            }
-            set
-            {
-                this.ViewData = (T)value;
-            }
-        }
-
     }
 }

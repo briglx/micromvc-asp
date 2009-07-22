@@ -5,22 +5,15 @@ using System.Web;
 
 namespace MicroMvc
 {
-    public class TextView<T> : IBaseView<T>
+    public class TextView<T> : BaseView<T>
     {
-        public T ViewData { get; set; }
-        public string ContentType { get; set; }
 
         public TextView()
         {
             this.ContentType = "text/text";
         }
 
-        public bool IsReusable
-        {
-            get { return false; }
-        }
-
-        public void ProcessRequest(HttpContext context)
+        public override void ProcessRequest(HttpContext context)
         {
             string result = string.Empty;
 
@@ -30,19 +23,9 @@ namespace MicroMvc
             }
 
             context.Response.ContentType = this.ContentType;
+            context.Response.StatusCode = this.StatusCode;
             context.Response.Write(result);
             context.Response.End();
-        }
-        object IBaseView.ViewData
-        {
-            get
-            {
-                return this.ViewData;
-            }
-            set
-            {
-                this.ViewData = (T)value;
-            }
         }
     }
 }
