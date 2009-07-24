@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 
 namespace MicroMvc
 {
@@ -35,7 +36,10 @@ namespace MicroMvc
             else if (obj is char || obj is Enum || obj is Guid)
                 WriteString("" + obj);
             else if (obj is DateTime)
-                _output.Append("new Date(" + ((DateTime)obj - new DateTime(1970, 1, 1)).TotalMilliseconds.ToString("0") + ")");
+            {
+                string rfc339 = XmlConvert.ToString((DateTime)obj);
+                _output.Append(rfc339);
+            }
             else if (obj is string)
                 WriteString((string)obj);
             else if (obj is IDictionary)
