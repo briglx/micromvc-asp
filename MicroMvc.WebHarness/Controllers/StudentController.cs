@@ -23,15 +23,23 @@ namespace MicroMvc.WebTest.Controllers
             s.Phone = "555-4459";
 
 
+          
+            // Pick the best view based on URL content type
             IBaseView<Student> baseView;
-            if (false)
-            {
-                baseView = (ViewPage<Student>)LoadView("~/Views/Default.aspx");
-            }
-            else
+            if (this.Request.Url.ToString().Contains("?xml"))
             {
                 baseView = new XmlView<Student>();
             }
+            else if (this.Request.Url.ToString().Contains("?json"))
+            {
+                baseView = new JsonView<Student>();
+            }
+            else
+            {
+                baseView = (ViewPage<Student>)LoadView("~/Views/Default.aspx");
+            }
+
+            // Bind data to view and display
             baseView.ViewData = s;
             baseView.ProcessRequest(this.Context);
 
