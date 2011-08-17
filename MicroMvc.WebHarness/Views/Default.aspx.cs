@@ -10,10 +10,11 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 
 using MicroMvc;
+using MicroMvc.Views;
 
 namespace MicroMvc.WebTest
 {
-    public partial class _Default : ViewPage<Student>
+    public partial class _Default : PageView<Student>
     {
         protected void Page_Load(object sender, EventArgs e)
         {

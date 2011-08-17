@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 
 using MicroMvc;
+using MicroMvc.Views;
 
 namespace MicroMvc.WebTest.Controllers
 {
@@ -36,7 +37,7 @@ namespace MicroMvc.WebTest.Controllers
             }
             else
             {
-                baseView = (ViewPage<Student>)LoadView("~/Views/Default.aspx");
+                baseView = (PageView<Student>)LoadView("~/Views/Default.aspx");
             }
 
             // Bind data to view and display
