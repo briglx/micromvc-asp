@@ -17,7 +17,7 @@ namespace MicroMvc.Test
             Route r = new Route();
             r.Url = "Default.aspx/[userId]";
 
-            Assert.AreEqual("Default.aspx/(?<userId>[^/]+)", r.Pattern);
+            Assert.AreEqual("Default.aspx/(?<userId>[^/^?]+)", r.Pattern);
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace MicroMvc.Test
             Route r = new Route();
             r.Url = "Default.aspx/[userName]";
 
-            Assert.AreEqual("Default.aspx/(?<userName>[^/]+)", r.Pattern);
+            Assert.AreEqual("Default.aspx/(?<userName>[^/^?]+)", r.Pattern);
         }
 
         [Test]
