@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroMvc", "MicroMvc\MicroMvc.csproj", "{2F196306-A638-42E5-A2DC-9AF78BF5E612}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroMvc.Test", "MicroMvc.Test\MicroMvc.Test.csproj", "{5A68DEB7-CD8F-4B52-BE51-969F5062BDA9}"

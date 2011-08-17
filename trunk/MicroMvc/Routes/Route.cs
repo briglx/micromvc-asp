@@ -10,13 +10,11 @@ namespace MicroMvc
         private string _url;
         private string _pattern;
         private string _handler;
-        private bool _construct;
         private List<string> _parameters;
 
         public Route(){}
-        public Route(string url, string handler, bool construct)
+        public Route(string url, string handler)
         {
-            this.Construct = construct;
             this.Url = url;
             this.Handler = handler;
         }
@@ -26,7 +24,7 @@ namespace MicroMvc
             set
             {
                 _url = value;
-                _pattern = ConstructPattern(_url, _construct);
+                _pattern = ConstructPattern(_url);
                 _parameters = GetParameters(_url);
             }
         }
@@ -34,11 +32,7 @@ namespace MicroMvc
         {
             get { return _pattern; }
         }
-        public bool Construct
-        {
-            get{return _construct;}
-            set{_construct = value;}
-        }
+        
         public string Handler
         {
             get { return _handler; }
@@ -51,34 +45,24 @@ namespace MicroMvc
 
         public bool Match(Uri uri)
         {
-            string input = uri.ToString();
+            string input = uri.ToString().ToLower();
 
             // Use the this.URL to pattern match with the passed in uri
-            Regex r = new Regex(this.Pattern, RegexOptions.IgnoreCase);
+            Regex r = new Regex(this.Pattern.ToLower(), RegexOptions.IgnoreCase);
             return r.IsMatch(input);
         }
 
-        private string ConstructPattern(string url, bool construct)
+        private string ConstructPattern(string url)
         {
             // Example:
             // Default.aspx/[userId]
-            // Default.aspx/?<userId>(\w+)
+            // Default.aspx/?<userId>[^/^?]+)
 
             string pattern = "";
 
-            if (construct)
-            {
-                pattern = url.Replace("[", "(?<");
-                pattern = pattern.Replace("]", ">[^/^?]+)");
-            }
-            else
-            {
-                pattern = url.Replace("[", "<");
-                pattern = pattern.Replace("]", ">");
-
-                pattern = pattern.Replace("1$", "[");
-                pattern = pattern.Replace("$1", "]");
-            }
+            pattern = url.Replace("[", "(?<");
+            pattern = pattern.Replace("]", ">[^/^?]+)");
+           
 
             return pattern;
         }

@@ -61,19 +61,7 @@ namespace MicroMvc.Test
             Assert.AreEqual("082008", routeData.Values["strDate"]);
         }
 
-        [Test]
-        public void OptionalParameterBugTest()
-        {
-            Routes.Add(new Route
-            {
-                Url = "Default.aspx/[userId]/(resultFormat=[ResultFormat])?"
-            });
-
-            Uri uri = new Uri("http://apophxl3t5483/Default.aspx/brig/resultFormat=xml");
-            RouteData routeData = this.Routes.GetRouteData(uri);
-            Assert.AreEqual("xml",routeData.Values["ResultFormat"]);
-        }
-
+       
         [Test]
         public void NoTrailingSlashTest()
         {

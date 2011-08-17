@@ -22,8 +22,8 @@ namespace MicroMvc.Test
         [SetUp]
         public void SetUp()
         {
-            Routes.Add(new Route { Url = "Default.aspx/[category]/[color]" });
-            Routes.Add(new Route { Url = "Default.aspx/[userId]" });
+            Routes.Add(new Route("Default.aspx/[category]/[color]",""));
+            Routes.Add(new Route("Default.aspx/[userId]", ""));
         }
 
         [Test]
