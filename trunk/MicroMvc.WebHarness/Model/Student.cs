@@ -14,7 +14,7 @@ namespace MicroMvc.WebTest
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string FormattedName { get; set; }
+        public string FormattedName { get { return this.FirstName + " " + this.LastName; } }
         public string Address { get; set; }
         public string Phone { get; set; }
         public string email { get; set; }

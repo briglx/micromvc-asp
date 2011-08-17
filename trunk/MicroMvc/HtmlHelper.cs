@@ -6,6 +6,8 @@ using System.Web.Compilation;
 using System.Web.UI;
 using System.Web.Configuration;
 
+using MicroMvc.Views;
+
 namespace MicroMvc
 {
     public class HtmlHelper
