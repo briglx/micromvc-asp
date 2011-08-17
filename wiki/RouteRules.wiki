@@ -1,0 +1,20 @@
+#Route Rules Syntax.
+
+= Introduction =
+
+The routing rules have a syntax that allows parameters to be defined in the url.
+
+
+= Details =
+
+Meaningful urls means there are parameters in the URL that are useful. For example:
+  * http:\\example.com\products\123\ 
+  * http:\\example.com\students\abba\ 
+  * http:\\example.com\blog\posts\2011\october\13 
+
+The routing rules describe where parameters can be found in the url. The most simple rule is the bracket defintion
+
+  * http:\\example.com\products\[productId]\ 
+  * http:\\example.com\students\[username]\ 
+  * http:\\example.com\blog\posts\[year]\[month]\[date] 
+
